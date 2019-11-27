@@ -15,4 +15,7 @@ RUN dotnet publish -c Release -o out
 FROM mcr.microsoft.com/dotnet/core/aspnet:2.2 AS runtime
 WORKDIR /app/
 COPY --from=build-env /app/netcoredocker/out .
-ENTRYPOINT ["dotnet", "netcoredocker.dll"]
+COPY docker-entrypoint.sh .
+RUN chmod +x ./docker-entrypoint.sh
+
+ENTRYPOINT ["./docker-entrypoint.sh"]
